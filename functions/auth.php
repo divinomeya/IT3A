@@ -1,51 +1,51 @@
 <?php
-
 function loginUser($pdo,$login,$password){
-    // Application Query #2
-    $sql = "
-        SELECT
-            user_id,
-            user_email,
-            user_username,
-            user_password,
-            user_role
+//application query 02
+$sql = "
+SELECT
+        user_id,
+        user_email,
+        user_username,
+        user_password,
+        user_role
+
         FROM users
         WHERE user_email = :login
-            OR user_username = :login
-        LIMIT 1
-    ";
-
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([':login'=>$login]);
-
-    $user = $stmt->fetch();
-
-    if(!$user){
-        return false;
-    }
-
-    if (!password_verify($password, $user['user_password'])){
-        return false;
-    }
-
-    //SESSION VARIABLE
-    $_SESSION['user_id']=$user['user_id'];
-    $_SESSION['user_email']=$user['user_email'];
-    $_SESSION['user_username']=$user['user_username'];
-    $_SESSION['user_role']=$user['user_role'];
+        OR user_username = :login
+    LIMIT 1
+";
 
 
-    // initialize session
-    $_SESSION['session_id'] = startUserSession($pdo);
-    return true;
+$stmt = $pdo->prepare($sql);
+$stmt->execute([':login'=>$login]);
 
+$user = $stmt->fetch();
+
+if(!$user){
+    return false;
+}
+
+if(!password_verify($password, $user['user_password'])){
+return false;
 
 }
 
+$_SESSION['user_id']=$user['user_id'];
+$_SESSION['user_email']=$user['user_email'];
+$_SESSION['user_username']=$user['user_username'];
+$_SESSION['user_role']=$user['user_role'];
+
+// initial database session
+
+$_SESSION['session_id'] = startUserSession($pdo);
+
+
+return true;
+}
 
 function requireLogin(){
     if(!isset($_SESSION['user_id'])){
-        header('Location: '. BASE_URL . '/index.php');
+        header('Location: ', BASE_URL . '/index.php');
         exit;
     }
 }
@@ -54,8 +54,8 @@ function requireRole($role){
     requireLogin();
 
     if($_SESSION['user_role'] !== $role){
-        http_response_code(403);
-        die('Access Denied');
+        http_response_code(40);
+        die('Access denied');
     }
 }
 
