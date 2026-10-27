@@ -904,7 +904,7 @@ exit;
 </head>
 <body>
     <h1>Hello Manager</h1>
-    <a href="<?= BASE_URL ?>/auth/signout.php">Sign Out</a>
+    <a href="../auth/signout.php">Sign Out</a>
 
 </body>
 >>>>>>> 53cf7c5fe3d8491cb612a906919fedca2600b224
