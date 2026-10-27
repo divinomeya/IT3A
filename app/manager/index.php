@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 
 //Database Connection
@@ -907,5 +906,4 @@ exit;
     <a href="../auth/signout.php">Sign Out</a>
 
 </body>
->>>>>>> 53cf7c5fe3d8491cb612a906919fedca2600b224
 </html>
